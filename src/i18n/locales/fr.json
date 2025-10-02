@@ -1,0 +1,495 @@
+{
+  "common": {
+    "loading": "Chargement...",
+    "error": "Erreur",
+    "success": "Succès",
+    "cancel": "Annuler",
+    "continue": "Continuer",
+    "back": "Retour",
+    "next": "Suivant",
+    "done": "Terminé",
+    "save": "Sauvegarder",
+    "edit": "Modifier",
+    "delete": "Supprimer",
+    "confirm": "Confirmer",
+    "yes": "Oui",
+    "no": "Non",
+    "create": "Créer",
+    "youSelected": "Vous avez choisi de",
+    "import": "Importer",
+    "getStarted": "Commencer",
+    "copy": "Copier",
+    "copied": "Copié !",
+    "ok": "OK"
+  },
+  "app": {
+    "name": "Pars en Cours",
+    "tagline": "Connecter les étudiants dans le besoin de mobilité avec ceux qui peuvent aider"
+  },
+  "navigation": {
+    "messages": "Messages",
+    "map": "Carte",
+    "profile": "Profil"
+  },
+  "onboarding": {
+    "step1": {
+      "title": "Pars en Cours",
+      "studentButton": "Je suis étudiant",
+      "nonStudentButton": "Je ne suis pas étudiant"
+    },
+    "step2": {
+      "title": "Comment utiliser l'application",
+      "subtitle": "Découvrez les principales fonctionnalités et comment naviguer",
+      "askFeature": {
+        "title": "Demander de l'aide",
+        "description": "Demandez des dons ou de l'assistance. Cette icône permet de faire une demande d'aide."
+      },
+      "giveFeature": {
+        "title": "Faire un don",
+        "description": "Faites un don directement à un(e) étudiant(e). Cette icône permet de créer une offre de don."
+      },
+      "mapFeature": {
+        "title": "Explorer la carte",
+        "description_student": "Trouvez des dons et des demandes d'aide près de chez vous.",
+        "description_not_student": "Trouvez des demandes d'aide près de chez vous."
+      },
+      "messagesFeature": {
+        "title": "Rester connecté",
+        "description": "Échangez avec d'autres utilisateurs par messages privés."
+      },
+      "studentAdditionalFeatures": "En tant qu'étudiant, vous pouvez aussi :",
+      "additionalFeatures": "Vous pouvez aussi :",
+      "getStartedButton": "Commencer"
+    },
+    "step3": {
+      "title": "Créez votre compte",
+      "subtitle": "Générez votre identité nostr pour commencer",
+      "explanation": {
+        "title": "Qu'est-ce que Nostr ?",
+        "description": "Nostr est un protocole décentralisé qui vous donne un contrôle total sur votre identité et vos données.",
+        "relays": {
+          "title": "Relais",
+          "description": "Vos publications sont distribuées sur plusieurs serveurs relais, garantissant que vos données restent disponibles même si certains relais tombent en panne."
+        },
+        "publicKey": {
+          "title": "Clé publique = Nom d'utilisateur",
+          "description": "Votre clé publique est votre identifiant unique que les autres peuvent utiliser pour trouver et vérifier vos publications."
+        },
+        "privateKey": {
+          "title": "Clé privée = Mot de passe",
+          "description": "Votre clé privée signe vos publications et prouve qu'elles viennent de vous.",
+          "warning": " Gardez-la secrète et sécurisée - elle ne peut pas être changée si elle est perdue !"
+        }
+      },
+      "keyGeneration": {
+        "chooseOption": "Choisissez une option :",
+        "generateNew": "Générer une paire de clés",
+        "generating": "Génération...",
+        "importExisting": "Importer des clés existantes",
+        "importLabel": "Entrez votre clé privée (nsec ou hex) :",
+        "importPlaceholder": "nsec1... ou clé privée hex",
+        "yourKeys": "Vos clés Nostr :",
+        "publicKeyLabel": "Clé publique (Nom d'utilisateur) :",
+        "privateKeyLabel": "Clé privée (Gardez secret !) :",
+        "warningMessage": "Sauvegardez votre clé privée en sécurité ! Si vous la perdez, vous perdrez définitivement l'accès à votre compte."
+      },
+      "alerts": {
+        "keysGenerated": {
+          "title": "Clés générées !",
+          "message": "Vos clés Nostr ont été générées. Veuillez sauvegarder votre clé privée en sécurité - vous en aurez besoin pour accéder à votre compte."
+        },
+        "generateError": {
+          "title": "Erreur",
+          "message": "Échec de la génération des clés. Veuillez réessayer."
+        },
+        "importError": {
+          "title": "Erreur",
+          "message": "Veuillez entrer une clé privée."
+        },
+        "invalidKey": {
+          "title": "Erreur",
+          "message": "Format de clé privée invalide. Veuillez entrer une clé nsec valide ou une chaîne hex."
+        },
+        "importSuccess": {
+          "title": "Succès !",
+          "message": "Vos clés ont été importées avec succès."
+        },
+        "importFailed": {
+          "title": "Erreur",
+          "message": "Échec de l'importation des clés. Veuillez vérifier votre clé privée et réessayer."
+        },
+        "copySuccess": {
+          "title": "Copié !",
+          "message": "Clé {{keyType}} copiée dans le presse-papiers."
+        },
+        "copyError": {
+          "title": "Erreur",
+          "message": "Échec de la copie de la clé dans le presse-papiers."
+        }
+      }
+    },
+    "progress": "{{current}} de {{total}}"
+  },
+  "messages": {
+    "title": "Messages",
+    "noMessages": "Aucun message pour le moment",
+    "startConversation": "Commencez une conversation en interagissant avec les annonces !",
+    "loading": "Chargement des conversations...",
+    "justNow": "À l'instant",
+    "minutesAgo": "il y a {{count}}min",
+    "hoursAgo": "il y a {{count}}h",
+    "daysAgo": "il y a {{count}}j",
+    "dmRelays": "Config DM",
+    "dmRelaysConfigured": "Relais DM Déjà Configurés",
+    "dmRelaysConfiguredMessage": "Vous avez {{count}} relais DM configuré(s) : {{relays}}. Voulez-vous les mettre à jour ?",
+    "updateRelays": "Mettre à jour",
+    "dmRelaysPublished": "Relais DM Publiés",
+    "dmRelaysPublishedMessage": "{{count}} relais DM publié(s) avec succès. Vous pouvez maintenant recevoir des messages privés !",
+    "error": "Erreur",
+    "dmRelaysError": "Échec de la vérification des relais DM. Veuillez réessayer.",
+    "noWriteRelays": "Aucun relais d'écriture configuré. Veuillez d'abord ajouter des relais dans les Paramètres.",
+    "dmRelaysPublishError": "Échec de la publication des relais DM. Veuillez réessayer."
+  },
+  "conversation": {
+    "typeMessage": "Tapez un message...",
+    "error": "Erreur",
+    "sendError": "Échec de l'envoi du message. Veuillez réessayer.",
+    "loading": "Chargement des messages...",
+    "sending": "Envoi...",
+    "recipientNoDMRelays": "Cet utilisateur n'a pas encore configuré la messagerie directe. Il doit d'abord configurer ses relais de messagerie.",
+    "notAuthenticated": "Vous devez être connecté pour envoyer des messages."
+  },
+  "profile": {
+    "title": "Profil",
+    "subtitle": "Gérez votre compte et vos annonces",
+    "loading": "Chargement...",
+    "user": "Utilisateur",
+    "pleaseLogin": "Veuillez vous connecter pour accéder à votre profil",
+    "logIn": "Se connecter",
+    "myPosts": "Mes Annonces",
+    "noPosts": "Aucune annonce pour le moment",
+    "noPostsDescription": "Créez votre première annonce avec le bouton + ci-dessous",
+    "bookmarks": "Signets",
+    "resetOnboarding": "Réinitialiser l'intégration (Debug)",
+    "resetOnboardingConfirm": {
+      "title": "Réinitialiser l'intégration",
+      "message": "Cela redémarrera le processus d'intégration. Êtes-vous sûr ?",
+      "reset": "Réinitialiser",
+      "successTitle": "Succès",
+      "successMessage": "L'intégration a été réinitialisée. Redémarrez l'application pour voir le processus d'intégration.",
+      "errorTitle": "Erreur",
+      "errorMessage": "Échec de la réinitialisation de l'intégration"
+    },
+    "stats": {
+      "requests": "Demandes",
+      "donations": "Dons",
+      "successRate": "Taux de réussite"
+    },
+    "about": "À propos",
+    "recentActivity": "Activité Récente",
+    "noRecentActivity": "Aucune activité récente",
+    "report": "Signaler",
+    "contact": "Contacter",
+    "copyNpub": "Copier npub",
+    "npubCopied": "npub copié !",
+    "contactMessages": {
+      "transport": {
+        "ask": "Salut ! Je suis intéressé par votre demande de transport léger : {{title}}. Est-ce toujours disponible ?",
+        "give": "Salut ! Je suis intéressé par votre offre de transport léger : {{title}}. Est-ce toujours disponible ?"
+      },
+      "repair": {
+        "ask": "Salut ! Je peux vous aider avec votre demande de réparation : {{title}}. Cherchez-vous toujours de l'aide ?",
+        "give": "Salut ! Je suis intéressé par votre service de réparation : {{title}}. Offrez-vous toujours ce service ?"
+      },
+      "carpool": {
+        "ask": "Salut ! Je peux vous proposer un trajet pour : {{title}}. Cherchez-vous toujours un covoiturage ?",
+        "give": "Salut ! Je suis intéressé par votre offre de covoiturage : {{title}}. La place est-elle toujours disponible ?"
+      },
+      "general": {
+        "ask": "Salut ! Je peux vous aider avec votre demande : {{title}}. Cherchez-vous toujours de l'aide ?",
+        "give": "Salut ! Je suis intéressé par votre offre : {{title}}. Est-ce toujours disponible ?"
+      }
+    },
+    "edit": {
+      "title": "Modifier le Profil",
+      "save": "Sauvegarder",
+      "name": "Nom",
+      "displayName": "Nom d'affichage",
+      "about": "À propos",
+      "profileMedia": "Médias du Profil",
+      "profileMediaDescription": "Ajoutez des images pour personnaliser votre profil.",
+      "profilePictureUrl": "URL de la Photo de Profil",
+      "bannerImageUrl": "URL de l'Image de Bannière",
+      "contactLinks": "Contact et Liens",
+      "contactLinksDescription": "Ajoutez des moyens pour que d'autres puissent vous contacter ou en savoir plus.",
+      "website": "Site Web",
+      "lightningAddress": "Adresse Lightning (LUD16)",
+      "nip05Identifier": "Identifiant NIP-05",
+      "namePlaceholder": "Entrez votre nom",
+      "displayNamePlaceholder": "Entrez votre nom d'affichage",
+      "aboutPlaceholder": "À propos de vous",
+      "profilePicturePlaceholder": "https://exemple.com/avatar.jpg",
+      "bannerPlaceholder": "https://exemple.com/banniere.jpg",
+      "websitePlaceholder": "https://votresite.com",
+      "lightningAddressPlaceholder": "vous@exemple.com",
+      "nip05Placeholder": "vous@exemple.com",
+      "noChangesToSave": "Aucune modification à sauvegarder",
+      "profileUpdatedSuccess": "Profil mis à jour avec succès !",
+      "unsavedChangesTitle": "Modifications Non Sauvegardées",
+      "unsavedChangesMessage": "Vous avez des modifications non sauvegardées. Êtes-vous sûr de vouloir revenir en arrière ?",
+      "discardChanges": "Ignorer les Modifications"
+    }
+  },
+  "fab": {
+    "ask": "Demander",
+    "give": "Donner"
+  },
+  "map": {
+    "searchPlaceholder": "Rechercher...",
+    "allPosts": "Toutes les Annonces",
+    "askingForHelp": "Demander",
+    "offeringHelp": "Donner",
+    "cancel": "Annuler",
+    "viewDetails": "Voir les Détails",
+    "createNewPost": "Créer une Nouvelle Annonce",
+    "location": "Localisation",
+    "postAtLocation": "Votre annonce sera créée à l'emplacement sélectionné.",
+    "askForHelp": "Demander",
+    "offerHelp": "Donner",
+    "selectLocation": "Sélectionner la Localisation",
+    "selectLocationMessage": "Appuyez sur la carte pour choisir où vous voulez créer cette annonce.",
+    "locationNotAvailable": "Localisation Non Disponible",
+    "locationNotAvailableMessage": "Votre localisation n'est pas disponible. Veuillez vérifier vos permissions de localisation et réessayer.",
+    "developmentMode": "Mode Développement",
+    "mapboxDisabled": "Mapbox désactivé pour le développement",
+    "loadingPosts": "Chargement des annonces...",
+    "retry": "Réessayer",
+    "noListingsAvailable": "Aucune annonce disponible depuis les relais",
+    "beFirstToCreate": "Soyez le premier à créer une annonce !",
+    "loadMore": "Charger Plus",
+    "loading": "Chargement...",
+    "youveReachedEnd": "Vous avez atteint la fin",
+    "postsInArea": "Annonces dans cette zone"
+  },
+  "posts": {
+    "ask": "Demander",
+    "give": "Donner",
+    "request": "Demande",
+    "donation": "Don",
+    "askForHelp": "demander de l'aide",
+    "offerHelp": "offrir de l'aide"
+  },
+  "createPost": {
+    "requestHelp": "Demander de l'aide",
+    "offerHelp": "Offrir de l'aide",
+    "title": "Titre",
+    "titlePlaceholderAsk": "ex: Besoin d'un vélo pour aller à la fac",
+    "titlePlaceholderGive": "ex: Offre de trotinettes gratuites",
+    "summary": "Résumé",
+    "summaryPlaceholder": "Brève description en une ligne",
+    "description": "Description",
+    "descriptionPlaceholder": "Parlez-nous de votre {{type}}...",
+    "need": "besoin",
+    "offer": "offre",
+    "city": "Ville",
+    "cityPlaceholder": "ex: Paris",
+    "location": "Localisation",
+    "locationPreview": "Aucune localisation définie",
+    "invalidGeohash": "Geohash invalide",
+    "geohash": "Geohash",
+    "geohashPlaceholder": "ex: u09t",
+    "notSet": "Non défini",
+    "accuracyLevel": "Niveau de précision",
+    "lessAccurate": "Moins précis (Plus privé)",
+    "moreAccurate": "Plus précis",
+    "accuracyLevels": {
+      "1": "Continent",
+      "2": "Pays",
+      "3": "Région",
+      "4": "Zone urbaine"
+    },
+    "manualGeohashLabel": "Ou entrez le geohash manuellement :",
+    "manualGeohashPlaceholder": "ex: u09t",
+    "useCurrentLocation": "Utiliser la localisation actuelle",
+    "locationHelper": "Un geohash est un code court qui représente une zone géographique.",
+    "privacyNotice": "Votre position exacte n'est jamais partagée. Les niveaux de précision inférieurs offrent plus de confidentialité mais moins de précision.",
+    "publish": "Publier {{type}}",
+    "request": "demande",
+    "publishingRequest": "Votre demande",
+    "publishingOffer": "Votre offre",
+    "publishRequest": "la demande",
+    "publishOffer": "l'offre",
+    "required": "*",
+    "charCount": "{{current}}/{{max}}",
+    "validation": {
+      "title": "Erreur de validation",
+      "titleRequired": "Veuillez entrer un titre pour votre annonce.",
+      "descriptionRequired": "Veuillez entrer une description.",
+      "geohashRequired": "Veuillez définir une localisation pour votre annonce.",
+      "cityRequired": "Veuillez entrer un nom de ville.",
+      "categoryRequired": "Veuillez sélectionner une catégorie pour votre annonce."
+    },
+    "errors": {
+      "title": "Erreur",
+      "noPrivateKey": "Aucune clé privée trouvée. Veuillez vous reconnecter.",
+      "noWriteRelays": "Aucun relais d'écriture disponible. Veuillez configurer les relais dans les paramètres.",
+      "publishFailed": "Échec de la publication. Veuillez réessayer.",
+      "locationPermission": "Autorisation requise",
+      "locationPermissionMessage": "L'autorisation de localisation est requise pour utiliser votre position actuelle.",
+      "locationFailed": "Échec de l'obtention de la position actuelle. Veuillez réessayer."
+    },
+    "success": {
+      "title": "Succès !",
+      "message": "{{type}} a été publiée sur {{count}} relais.",
+      "failedMessage": "Échec de la publication sur tous les relais. Veuillez vérifier votre connexion et réessayer."
+    },
+    "images": "Images",
+    "imagePlaceholder": "https://exemple.com/image.jpg",
+    "addImage": "Ajouter une Image",
+    "imageHelper": "Ajoutez des URLs d'images que vous souhaitez inclure avec votre annonce",
+    "category": "Catégorie",
+    "categoryPlaceholder": "Sélectionnez une catégorie",
+    "categories": {
+      "transport": "Moyen de Transport Léger",
+      "repair": "Réparation",
+      "carpool": "Co-voiturage"
+    },
+    "categoryDescriptions": {
+      "transport": "Vélo, trotinette, skate, etc.",
+      "repair": "Services de réparation pour moyens de transport léger",
+      "carpool": "Partage de trajets en co-voiturage"
+    }
+  },
+  "bookmarks": {
+    "title": "Signets",
+    "emptyTitle": "Aucun Signet Pour le Moment",
+    "emptyMessage": "Marquez les annonces qui vous intéressent en appuyant sur le bouton signet de n'importe quelle annonce.",
+    "errorTitle": "Échec du Chargement des Signets",
+    "errorMessage": "Quelque chose s'est mal passé lors du chargement de vos signets.",
+    "retryButton": "Réessayer",
+    "removeBookmark": "Supprimer le Signet",
+    "removeBookmarkConfirm": "Êtes-vous sûr de vouloir supprimer \"{{title}}\" de vos signets ?",
+    "remove": "Supprimer",
+    "bookmarkRemoved": "Signet Supprimé",
+    "bookmarkRemovedMessage": "Annonce supprimée des signets !",
+    "bookmarkAdded": "Signet Ajouté",
+    "bookmarkAddedMessage": "Annonce ajoutée aux signets avec succès !",
+    "bookmark": "Signet",
+    "bookmarked": "Signeté",
+    "removeBookmarkAction": "Supprimer le Signet",
+    "saving": "Sauvegarde...",
+    "failedToUpdate": "Échec de la mise à jour du signet. Veuillez réessayer.",
+    "failedToRefresh": "Échec du rafraîchissement des signets. Veuillez réessayer."
+  },
+  "postDetail": {
+    "justNow": "À l'instant",
+    "minutesAgo": "il y a {{count}}min",
+    "hoursAgo": "il y a {{count}}h",
+    "daysAgo": "il y a {{count}}j",
+    "notSpecified": "Non renseigné",
+    "bookmarkRemoved": "Signet Supprimé",
+    "bookmarkRemovedMessage": "Annonce supprimée des signets !",
+    "bookmarkAdded": "Signet Ajouté",
+    "bookmarkAddedMessage": "Annonce ajoutée aux signets avec succès !",
+    "error": "Erreur",
+    "failedToUpdateBookmark": "Échec de la mise à jour du signet. Veuillez réessayer.",
+    "reportPost": "Signaler l'Annonce",
+    "reportPostConfirm": "Êtes-vous sûr de vouloir signaler cette annonce ?",
+    "cancel": "Annuler",
+    "report": "Signaler",
+    "share": "Partager",
+    "shareComingSoon": "Fonctionnalité de partage bientôt disponible !",
+    "removeBookmark": "Supprimer le Signet",
+    "bookmark": "Signet",
+    "askingForHelp": "Demande d'Aide",
+    "offeringHelp": "Offre d'Aide",
+    "loading": "Chargement...",
+    "bookmarked": "Signeté",
+    "offerHelp": "Offrir de l'Aide",
+    "getInTouch": "Contacter",
+    "shareError": "Échec du partage de l'annonce. Veuillez réessayer.",
+    "contact": "Contacter",
+    "contactMessageAsk": "Salut ! Je suis intéressé par votre demande : {{title}}",
+    "contactMessageGive": "Salut ! Je suis intéressé par votre offre : {{title}}",
+    "conversationTitle": "À propos de : {{title}}",
+    "messageSent": "Message Envoyé",
+    "messageSentMessage": "Votre message a été envoyé ! Vous pouvez continuer la conversation dans Messages.",
+    "sendMessageError": "Échec de l'envoi du message. Veuillez réessayer.",
+    "notAuthenticated": "Vous devez être connecté pour envoyer des messages.",
+    "cannotMessageYourself": "Vous ne pouvez pas vous envoyer un message à vous-même.",
+    "recipientNoDMRelays": "Cet utilisateur n'a pas encore configuré la messagerie directe. Il doit d'abord configurer ses relais de messagerie."
+  },
+  "settings": {
+    "title": "Paramètres",
+    "theme": {
+      "title": "Thème",
+      "description": "Choisissez votre thème d'application préféré",
+      "light": "Clair",
+      "lightDescription": "Toujours utiliser le thème clair",
+      "dark": "Sombre",
+      "darkDescription": "Toujours utiliser le thème sombre",
+      "auto": "Automatique",
+      "autoDescription": "Suivre les préférences du système"
+    },
+    "language": {
+      "title": "Langue",
+      "description": "Choisissez votre langue préférée",
+      "english": "Anglais",
+      "french": "Français"
+    },
+    "relays": {
+      "title": "Relais",
+      "description": "Gérez vos connexions aux relais Nostr",
+      "addRelay": "Ajouter un Relais",
+      "relayUrl": "URL du Relais",
+      "relayName": "Nom du Relais (Optionnel)",
+      "addRelayPlaceholder": "wss://relay.exemple.com",
+      "addRelayNamePlaceholder": "Mon Relais",
+      "addRelayError": "Échec de l'ajout du relais",
+      "addRelaySuccess": "Relais ajouté avec succès",
+      "removeRelay": "Supprimer le Relais",
+      "removeRelayConfirm": {
+        "title": "Supprimer le Relais",
+        "message": "Êtes-vous sûr de vouloir supprimer ce relais ?",
+        "remove": "Supprimer",
+        "cancel": "Annuler"
+      },
+      "testRelay": "Tester la Connexion",
+      "testRelaySuccess": "Le relais fonctionne",
+      "testRelayError": "Échec de la connexion au relais",
+      "status": {
+        "connected": "Connecté",
+        "disconnected": "Déconnecté",
+        "connecting": "Connexion...",
+        "error": "Erreur"
+      },
+      "permissions": {
+        "read": "Lecture",
+        "write": "Écriture"
+      },
+      "lastConnected": "Dernière connexion : {{time}}",
+      "never": "Jamais"
+    },
+    "debug": {
+      "title": "Débogage",
+      "description": "Options de développement et de débogage"
+    },
+    "resetOnboarding": "Réinitialiser l'intégration (Debug)",
+    "resetOnboardingConfirm": {
+      "title": "Réinitialiser l'intégration",
+      "message": "Cela redémarrera le processus d'intégration. Êtes-vous sûr ?",
+      "reset": "Réinitialiser",
+      "successTitle": "Succès",
+      "successMessage": "L'intégration a été réinitialisée. Redémarrez l'application pour voir le processus d'intégration.",
+      "errorTitle": "Erreur",
+      "errorMessage": "Échec de la réinitialisation de l'intégration"
+    },
+    "logout": "Se Déconnecter",
+    "logoutConfirm": {
+      "title": "Se Déconnecter",
+      "message": "Êtes-vous sûr de vouloir vous déconnecter ? Vous devrez vous reconnecter pour accéder à votre compte.",
+      "logout": "Se Déconnecter",
+      "cancel": "Annuler"
+    }
+  }
+}

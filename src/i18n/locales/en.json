@@ -1,0 +1,495 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "cancel": "Cancel",
+    "continue": "Continue",
+    "back": "Back",
+    "next": "Next",
+    "done": "Done",
+    "save": "Save",
+    "edit": "Edit",
+    "delete": "Delete",
+    "confirm": "Confirm",
+    "yes": "Yes",
+    "no": "No",
+    "create": "Create",
+    "youSelected": "You have chosen to",
+    "import": "Import",
+    "getStarted": "Get Started",
+    "copy": "Copy",
+    "copied": "Copied!",
+    "ok": "OK"
+  },
+  "app": {
+    "name": "Pars en Cours",
+    "tagline": "Connecting students in need of transportation with those who can help"
+  },
+  "navigation": {
+    "messages": "Messages",
+    "map": "Map",
+    "profile": "Profile"
+  },
+  "onboarding": {
+    "step1": {
+      "title": "Pars en Cours",
+      "studentButton": "I am a student",
+      "nonStudentButton": "I am not a student"
+    },
+    "step2": {
+      "title": "How to use the app",
+      "subtitle": "Discover the main features and how to navigate",
+      "askFeature": {
+        "title": "Ask for help",
+        "description": "Request donations or assistance from the community. This icon lets you create a help request."
+      },
+      "giveFeature": {
+        "title": "Give donations",
+        "description": "Offer help, resources, or donations to those in need. This icon lets you create a donation offer."
+      },
+      "mapFeature": {
+        "title": "Explore the map",
+        "description_student": "Find donations and requests for help near you.",
+        "description_not_student": "Find requests for help near you."
+      },
+      "messagesFeature": {
+        "title": "Stay connected",
+        "description": "Communicate with other users through private messages."
+      },
+      "studentAdditionalFeatures": "As a student, you can also:",
+      "additionalFeatures": "You can also:",
+      "getStartedButton": "Get Started"
+    },
+    "step3": {
+      "title": "Create Your Account",
+      "subtitle": "Set up your nostr identity to start",
+      "explanation": {
+        "title": "What is Nostr?",
+        "description": "Nostr is a decentralized protocol that gives you full control over your identity and data.",
+        "relays": {
+          "title": "Relays",
+          "description": "Your posts are distributed across multiple relay servers, ensuring your data remains available even if some relays go offline."
+        },
+        "publicKey": {
+          "title": "Public Key = Username",
+          "description": "Your public key is your unique identifier that others can use to find and verify your posts."
+        },
+        "privateKey": {
+          "title": "Private Key = Password",
+          "description": "Your private key signs your posts and proves they're from you.",
+          "warning": " Keep it secret and secure - it cannot be changed if lost!"
+        }
+      },
+      "keyGeneration": {
+        "chooseOption": "Choose an option:",
+        "generateNew": "Generate a pair of keys",
+        "generating": "Generating...",
+        "importExisting": "Import Existing Keys",
+        "importLabel": "Enter your private key (nsec or hex):",
+        "importPlaceholder": "nsec1... or private key hex",
+        "yourKeys": "Your Nostr Keys:",
+        "publicKeyLabel": "Public Key (Username):",
+        "privateKeyLabel": "Private Key (Keep Secret!):",
+        "warningMessage": "Save your private key safely! If you lose it, you'll lose access to your account permanently."
+      },
+      "alerts": {
+        "keysGenerated": {
+          "title": "Keys Generated!",
+          "message": "Your Nostr keys have been generated. Please save your private key securely - you'll need it to access your account."
+        },
+        "generateError": {
+          "title": "Error",
+          "message": "Failed to generate keys. Please try again."
+        },
+        "importError": {
+          "title": "Error",
+          "message": "Please enter a private key."
+        },
+        "invalidKey": {
+          "title": "Error",
+          "message": "Invalid private key format. Please enter a valid nsec key or hex string."
+        },
+        "importSuccess": {
+          "title": "Success!",
+          "message": "Your keys have been imported successfully."
+        },
+        "importFailed": {
+          "title": "Error",
+          "message": "Failed to import keys. Please check your private key and try again."
+        },
+        "copySuccess": {
+          "title": "Copied!",
+          "message": "{{keyType}} key copied to clipboard."
+        },
+        "copyError": {
+          "title": "Error",
+          "message": "Failed to copy key to clipboard."
+        }
+      }
+    },
+    "progress": "{{current}} of {{total}}"
+  },
+  "messages": {
+    "title": "Messages",
+    "noMessages": "No messages yet",
+    "startConversation": "Start a conversation by interacting with posts!",
+    "loading": "Loading conversations...",
+    "justNow": "Just now",
+    "minutesAgo": "{{count}}m ago",
+    "hoursAgo": "{{count}}h ago",
+    "daysAgo": "{{count}}d ago",
+    "dmRelays": "DM Setup",
+    "dmRelaysConfigured": "DM Relays Already Configured",
+    "dmRelaysConfiguredMessage": "You have {{count}} DM relay(s) configured: {{relays}}. Do you want to update them?",
+    "updateRelays": "Update",
+    "dmRelaysPublished": "DM Relays Published",
+    "dmRelaysPublishedMessage": "Successfully published {{count}} DM relay(s). You can now receive private messages!",
+    "error": "Error",
+    "dmRelaysError": "Failed to check DM relays. Please try again.",
+    "noWriteRelays": "No write relays configured. Please add relays in Settings first.",
+    "dmRelaysPublishError": "Failed to publish DM relays. Please try again."
+  },
+  "conversation": {
+    "typeMessage": "Type a message...",
+    "error": "Error",
+    "sendError": "Failed to send message. Please try again.",
+    "loading": "Loading messages...",
+    "sending": "Sending...",
+    "recipientNoDMRelays": "This user has not set up direct messaging yet. They need to configure their DM inbox relays first.",
+    "notAuthenticated": "You must be logged in to send messages."
+  },
+  "profile": {
+    "title": "Profile",
+    "subtitle": "Manage your account and posts",
+    "loading": "Loading...",
+    "user": "User",
+    "pleaseLogin": "Please log in to access your profile",
+    "logIn": "Log In",
+    "myPosts": "My Posts",
+    "noPosts": "No posts yet",
+    "noPostsDescription": "Create your first post using the + button below",
+    "bookmarks": "Bookmarks",
+    "resetOnboarding": "Reset onboarding (Debug)",
+    "resetOnboardingConfirm": {
+      "title": "Reset onboarding",
+      "message": "This will restart the onboarding process. Are you sure?",
+      "reset": "Reset",
+      "successTitle": "Success",
+      "successMessage": "Onboarding has been reset. Restart the app to see the onboarding process.",
+      "errorTitle": "Error",
+      "errorMessage": "Failed to reset onboarding"
+    },
+    "stats": {
+      "requests": "Requests",
+      "donations": "Donations",
+      "successRate": "Success rate"
+    },
+    "about": "About",
+    "recentActivity": "Recent Activity",
+    "noRecentActivity": "No recent activity",
+    "report": "Report",
+    "contact": "Contact",
+    "copyNpub": "Copy npub",
+    "npubCopied": "npub copied!",
+    "contactMessages": {
+      "transport": {
+        "ask": "Hey! I'm interested in your request for light transport: {{title}}. Is it still available?",
+        "give": "Hey! I'm interested in your light transport offer: {{title}}. Is it still available?"
+      },
+      "repair": {
+        "ask": "Hey! I can help with your repair request: {{title}}. Are you still looking for assistance?",
+        "give": "Hey! I'm interested in your repair service: {{title}}. Are you still offering this service?"
+      },
+      "carpool": {
+        "ask": "Hey! I can offer you a ride for: {{title}}. Are you still looking for a carpool?",
+        "give": "Hey! I'm interested in your carpool offer: {{title}}. Is the spot still available?"
+      },
+      "general": {
+        "ask": "Hey! I can help with your request: {{title}}. Are you still looking for assistance?",
+        "give": "Hey! I'm interested in your offer: {{title}}. Is it still available?"
+      }
+    },
+    "edit": {
+      "title": "Edit Profile",
+      "save": "Save",
+      "name": "Name",
+      "displayName": "Display Name",
+      "about": "About",
+      "profileMedia": "Profile Media",
+      "profileMediaDescription": "Add images to personalize your profile.",
+      "profilePictureUrl": "Profile Picture URL",
+      "bannerImageUrl": "Banner Image URL",
+      "contactLinks": "Contact & Links",
+      "contactLinksDescription": "Add ways for others to contact you or learn more.",
+      "website": "Website",
+      "lightningAddress": "Lightning Address (LUD16)",
+      "nip05Identifier": "NIP-05 Identifier",
+      "namePlaceholder": "Enter your name",
+      "displayNamePlaceholder": "Enter your display name",
+      "aboutPlaceholder": "About yourself",
+      "profilePicturePlaceholder": "https://example.com/avatar.jpg",
+      "bannerPlaceholder": "https://example.com/banner.jpg",
+      "websitePlaceholder": "https://yourwebsite.com",
+      "lightningAddressPlaceholder": "you@example.com",
+      "nip05Placeholder": "you@example.com",
+      "noChangesToSave": "No changes to save",
+      "profileUpdatedSuccess": "Profile updated successfully!",
+      "unsavedChangesTitle": "Unsaved Changes",
+      "unsavedChangesMessage": "You have unsaved changes. Are you sure you want to go back?",
+      "discardChanges": "Discard Changes"
+    }
+  },
+  "fab": {
+    "ask": "Ask",
+    "give": "Give"
+  },
+  "map": {
+    "searchPlaceholder": "Search posts...",
+    "allPosts": "All Posts",
+    "askingForHelp": "Asking for Help",
+    "offeringHelp": "Offering Help",
+    "cancel": "Cancel",
+    "viewDetails": "View Details",
+    "createNewPost": "Create New Post",
+    "location": "Location",
+    "postAtLocation": "Your post will be created at the selected location.",
+    "askForHelp": "Ask",
+    "offerHelp": "Give",
+    "selectLocation": "Select Location",
+    "selectLocationMessage": "Tap on the map to choose where you want to create this post.",
+    "locationNotAvailable": "Location Not Available",
+    "locationNotAvailableMessage": "Your location is not available. Please check your location permissions and try again.",
+    "developmentMode": "Development Mode",
+    "mapboxDisabled": "Mapbox disabled for development",
+    "loadingPosts": "Loading posts...",
+    "retry": "Retry",
+    "noListingsAvailable": "No listings available from relays",
+    "beFirstToCreate": "Be the first to create a post!",
+    "loadMore": "Load More",
+    "loading": "Loading...",
+    "youveReachedEnd": "You've reached the end",
+    "postsInArea": "Posts in this area"
+  },
+  "posts": {
+    "ask": "Ask",
+    "give": "Give",
+    "request": "Request",
+    "donation": "Donation",
+    "askForHelp": "ask for help",
+    "offerHelp": "offer help"
+  },
+  "createPost": {
+    "requestHelp": "Request Help",
+    "offerHelp": "Offer Help",
+    "title": "Title",
+    "titlePlaceholderAsk": "e.g., Need a bike to go to class",
+    "titlePlaceholderGive": "e.g., Offering free scooters",
+    "summary": "Summary",
+    "summaryPlaceholder": "Brief one-line description",
+    "description": "Description",
+    "descriptionPlaceholder": "Tell us more about your {{type}}...",
+    "need": "need",
+    "offer": "offer",
+    "city": "City",
+    "cityPlaceholder": "e.g., Paris",
+    "location": "Location",
+    "locationPreview": "No location set",
+    "invalidGeohash": "Invalid geohash",
+    "geohash": "Geohash",
+    "geohashPlaceholder": "e.g., u09t",
+    "notSet": "Not set",
+    "accuracyLevel": "Accuracy Level",
+    "lessAccurate": "Less Accurate (More Private)",
+    "moreAccurate": "More Accurate",
+    "accuracyLevels": {
+      "1": "Continent",
+      "2": "Country",
+      "3": "Region",
+      "4": "City Area"
+    },
+    "manualGeohashLabel": "Or enter geohash manually:",
+    "manualGeohashPlaceholder": "e.g., u09t",
+    "useCurrentLocation": "Use Current Location",
+    "locationHelper": "A geohash is a short code that represents a location area.",
+    "privacyNotice": "Your exact location is never shared. Lower accuracy levels provide more privacy but less precision.",
+    "publish": "Publish {{type}}",
+    "request": "Request",
+    "publishingRequest": "Your request",
+    "publishingOffer": "Your offer",
+    "publishRequest": "Request",
+    "publishOffer": "Offer",
+    "required": "*",
+    "charCount": "{{current}}/{{max}}",
+    "validation": {
+      "title": "Validation Error",
+      "titleRequired": "Please enter a title for your post.",
+      "descriptionRequired": "Please enter a description.",
+      "geohashRequired": "Please set a location for your post.",
+      "cityRequired": "Please enter a city name.",
+      "categoryRequired": "Please select a category for your post."
+    },
+    "errors": {
+      "title": "Error",
+      "noPrivateKey": "No private key found. Please login again.",
+      "noWriteRelays": "No write relays available. Please configure relays in settings.",
+      "publishFailed": "Failed to publish post. Please try again.",
+      "locationPermission": "Permission Required",
+      "locationPermissionMessage": "Location permission is required to use your current location.",
+      "locationFailed": "Failed to get current location. Please try again."
+    },
+    "success": {
+      "title": "Success!",
+      "message": "Your {{type}} has been published to {{count}} relay(s).",
+      "failedMessage": "Failed to publish to any relays. Please check your connection and try again."
+    },
+    "images": "Images",
+    "imagePlaceholder": "https://example.com/image.jpg",
+    "addImage": "Add Image",
+    "imageHelper": "Add URLs to images you want to include with your post",
+    "category": "Category",
+    "categoryPlaceholder": "Select a category",
+    "categories": {
+      "transport": "Light Transport",
+      "repair": "Repair Service",
+      "carpool": "Carpool"
+    },
+    "categoryDescriptions": {
+      "transport": "Bicycle, scooter, skateboard, etc.",
+      "repair": "Repair services for light transport",
+      "carpool": "Carpool ride sharing"
+    }
+  },
+  "settings": {
+    "title": "Settings",
+    "theme": {
+      "title": "Theme",
+      "description": "Choose your preferred app theme",
+      "light": "Light",
+      "lightDescription": "Always use light theme",
+      "dark": "Dark",
+      "darkDescription": "Always use dark theme",
+      "auto": "Auto",
+      "autoDescription": "Follow system preference"
+    },
+    "language": {
+      "title": "Language",
+      "description": "Choose your preferred language",
+      "english": "English",
+      "french": "French"
+    },
+    "relays": {
+      "title": "Relays",
+      "description": "Manage your Nostr relay connections",
+      "addRelay": "Add Relay",
+      "relayUrl": "Relay URL",
+      "relayName": "Relay Name (Optional)",
+      "addRelayPlaceholder": "wss://relay.example.com",
+      "addRelayNamePlaceholder": "My Relay",
+      "addRelayError": "Failed to add relay",
+      "addRelaySuccess": "Relay added successfully",
+      "removeRelay": "Remove Relay",
+      "removeRelayConfirm": {
+        "title": "Remove Relay",
+        "message": "Are you sure you want to remove this relay?",
+        "remove": "Remove",
+        "cancel": "Cancel"
+      },
+      "testRelay": "Test Connection",
+      "testRelaySuccess": "Relay is working",
+      "testRelayError": "Relay connection failed",
+      "status": {
+        "connected": "Connected",
+        "disconnected": "Disconnected",
+        "connecting": "Connecting...",
+        "error": "Error"
+      },
+      "permissions": {
+        "read": "Read",
+        "write": "Write"
+      },
+      "lastConnected": "Last connected: {{time}}",
+      "never": "Never"
+    },
+    "debug": {
+      "title": "Debug",
+      "description": "Development and debugging options"
+    },
+    "resetOnboarding": "Reset onboarding (Debug)",
+    "resetOnboardingConfirm": {
+      "title": "Reset onboarding",
+      "message": "This will restart the onboarding process. Are you sure?",
+      "reset": "Reset",
+      "successTitle": "Success",
+      "successMessage": "Onboarding has been reset. Restart the app to see the onboarding process.",
+      "errorTitle": "Error",
+      "errorMessage": "Failed to reset onboarding"
+    },
+    "logout": "Log Out",
+    "logoutConfirm": {
+      "title": "Log Out",
+      "message": "Are you sure you want to log out? You will need to log in again to access your account.",
+      "logout": "Log Out",
+      "cancel": "Cancel"
+    }
+  },
+  "bookmarks": {
+    "title": "Bookmarks",
+    "emptyTitle": "No Bookmarks Yet",
+    "emptyMessage": "Bookmark posts you find interesting by tapping the bookmark button on any post.",
+    "errorTitle": "Failed to Load Bookmarks",
+    "errorMessage": "Something went wrong while loading your bookmarks.",
+    "retryButton": "Try Again",
+    "removeBookmark": "Remove Bookmark",
+    "removeBookmarkConfirm": "Are you sure you want to remove \"{{title}}\" from your bookmarks?",
+    "remove": "Remove",
+    "bookmarkRemoved": "Bookmark Removed",
+    "bookmarkRemovedMessage": "Post removed from bookmarks!",
+    "bookmarkAdded": "Bookmark Added",
+    "bookmarkAddedMessage": "Post bookmarked successfully!",
+    "bookmark": "Bookmark",
+    "bookmarked": "Bookmarked",
+    "removeBookmarkAction": "Remove Bookmark",
+    "saving": "Saving...",
+    "failedToUpdate": "Failed to update bookmark. Please try again.",
+    "failedToRefresh": "Failed to refresh bookmarks. Please try again."
+  },
+  "postDetail": {
+    "justNow": "Just now",
+    "minutesAgo": "{{count}}m ago",
+    "hoursAgo": "{{count}}h ago",
+    "daysAgo": "{{count}}d ago",
+    "notSpecified": "Not specified",
+    "bookmarkRemoved": "Bookmark Removed",
+    "bookmarkRemovedMessage": "Post removed from bookmarks!",
+    "bookmarkAdded": "Bookmark Added",
+    "bookmarkAddedMessage": "Post bookmarked successfully!",
+    "error": "Error",
+    "failedToUpdateBookmark": "Failed to update bookmark. Please try again.",
+    "reportPost": "Report Post",
+    "reportPostConfirm": "Are you sure you want to report this post?",
+    "cancel": "Cancel",
+    "report": "Report",
+    "share": "Share",
+    "shareComingSoon": "Share functionality coming soon!",
+    "removeBookmark": "Remove Bookmark",
+    "bookmark": "Bookmark",
+    "askingForHelp": "Asking for Help",
+    "offeringHelp": "Offering Help",
+    "loading": "Loading...",
+    "bookmarked": "Bookmarked",
+    "offerHelp": "Offer Help",
+    "getInTouch": "Get in Touch",
+    "shareError": "Failed to share post. Please try again.",
+    "contact": "Contact",
+    "contactMessageAsk": "Hi! I'm interested in helping with your request: {{title}}",
+    "contactMessageGive": "Hi! I'm interested in your offer: {{title}}",
+    "conversationTitle": "About: {{title}}",
+    "messageSent": "Message Sent",
+    "messageSentMessage": "Your message has been sent! You can continue the conversation in Messages.",
+    "sendMessageError": "Failed to send message. Please try again.",
+    "notAuthenticated": "You must be logged in to send messages.",
+    "cannotMessageYourself": "You cannot send a message to yourself.",
+    "recipientNoDMRelays": "This user has not set up direct messaging yet. They need to configure their DM inbox relays first."
+  }
+}
