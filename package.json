@@ -1,6 +1,6 @@
 {
   "name": "pars-en-cours",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "main": "expo/AppEntry.js",
   "scripts": {
     "start": "expo start",
@@ -52,9 +52,11 @@
   },
   "private": true,
   "devDependencies": {
+    "@types/dotenv": "^8.2.3",
     "@types/ngeohash": "^0.6.8",
     "@types/react": "~19.1.0",
     "@types/react-native": "^0.73.0",
+    "dotenv": "^17.2.3",
     "typescript": "^5.9.2"
   }
 }

@@ -85,10 +85,12 @@ src/
     ├── nostr.ts             # Nostr key generation and validation
     ├── nip04.ts             # NIP-04 encryption/decryption for direct messages
     ├── giftwrap.ts          # NIP-59 gift wrap implementation (future)
+    ├── encryption.ts        # Additional encryption utilities
     ├── geohash.ts           # Privacy-preserving location utilities
     ├── validation.ts        # Form validation helpers
     ├── time.ts              # Time formatting utilities
-    ├── encryption.ts        # Additional encryption utilities
+    ├── deletion.ts          # Post deletion utilities (NIP-09)
+    ├── dmRelays.ts          # Direct message relay management
     └── index.ts             # Utility exports
 ```
 
@@ -109,8 +111,8 @@ src/
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/kn9w/pars-en-cours.git
-   cd pars-en-cours
+   git clone https://github.com/kn9w/pars_en_cours.git
+   cd pars_en_cours
    ```
 
 2. **Set up environment variables**
@@ -136,53 +138,69 @@ src/
    - Android: `npm run android` or scan QR code with Expo Go
    - Web: `npm run web`
 
+### Alternative: Development Without Mapbox
+
+For faster development without Mapbox dependencies:
+```bash
+npm run start:no-mapbox
+```
+
 ## 📱 App Screens
 
-### Onboarding Screen
-- **Step 1**: User type selection (student vs non-student)
-- **Step 2**: Feature explanation with user-type-specific content
-- **Step 3**: Nostr key generation or import with comprehensive explanation
-- Smooth animations and progress indicators
-- Support for both new key generation and existing key import
+### Onboarding
+3-step process for user type selection, feature introduction, and Nostr key generation/import with smooth animations.
 
-### Map Screen
-- **Mapbox Integration**: Professional mapping with custom styling
-- **Real-time Location**: GPS tracking with permission handling
-- **Interactive Markers**: Color-coded markers for ask/give posts
-- **Location Privacy**: Geohash-based approximate location sharing
-- **Context-Aware FAB**: Different options based on user type
-- **Map Interaction**: Tap to create posts at specific locations
+### Map
+Interactive Mapbox map with real-time location, color-coded markers for posts, geohash privacy, and tap-to-create functionality.
 
-### Messages Screen
-- **NIP-04 Direct Messages**: Encrypted direct messaging using Nostr protocol
-- **Real-time Conversations**: Live message updates with subscription management
-- **Conversation Management**: Organized chat threads with unread counts
-- **Profile Integration**: Automatic profile loading and caching for contacts
+### Messages & Conversations
+NIP-04 encrypted direct messaging with real-time updates, conversation threads, and automatic profile loading.
 
-### Profile Screen
-- **Nostr Profile Display**: Shows user's Nostr profile information
-- **QR Code Integration**: Share public key via QR code
-- **User Type Awareness**: Different features based on student status
-- **Settings Access**: Quick access to app preferences
-- **Profile Management**: Edit profile and manage account settings
+### Create Post
+Form for creating "Ask" or "Give" posts with category selection, location services, configurable geohash precision, and image support.
 
-### Settings Screen
-- **Theme Management**: Light, dark, and auto theme modes
-- **Language Selection**: English and French language support
-- **Relay Management**: Add, remove, and test Nostr relays
-- **Debug Options**: Development and testing utilities
-- **Account Management**: Logout and data management
+### Post Detail
+Full post view with author profile, image carousel, action buttons (contact, bookmark, share), and delete option for post owners.
+
+### Profile
+User's own Nostr profile with QR code sharing, settings access, and profile editing capabilities.
+
+### User Profile
+View other users' public profiles with bio, recent posts, and quick contact button.
+
+### Bookmarks
+Manage saved posts with pull-to-refresh and easy removal.
+
+### Settings
+Relay management, theme selection (light/dark/auto), language switching, and account settings.
 
 ## 🔧 Key Components
 
+### UI Components
 - **FloatingActionButton** - Context-aware expandable button (Ask/Give options)
 - **Button** - Multi-variant button with loading states and icons
 - **CustomAlert** - Themed modal system replacing native alerts
 - **QRCodeModal** - Nostr key sharing with copy functionality
 - **PostCard** - Listing display component with image support
+- **ProfileName** - Reusable profile name display with caching
 - **SkeletonLoader** - Loading state components
-- **Custom Hooks** - useAuth, useMessages, useListings, useRelays, useLocation, etc.
-- **RelayManager** - Centralized WebSocket connection management for Nostr relays
+- **Input** - Form input with validation
+- **Dropdown** - Dropdown selection component
+- **AppIcon** - Custom app icon component
+
+### Custom Hooks
+- **useAuth** - Authentication and user management
+- **useMessages** - NIP-04 direct messaging with real-time subscriptions
+- **useListings** - NIP-99 classified listings management
+- **useRelays** - Nostr relay configuration management
+- **useLocation** - Location services and permissions
+- **useNostrProfile** - User's own Nostr profile management
+- **useUserProfile** - Other users' profiles with smart caching
+- **useBookmarks** - Bookmark management with AsyncStorage
+- **useCustomAlert** - Custom alert system
+
+### Services
+- **RelayManager** - Centralized WebSocket connection management for Nostr relays with automatic reconnection
 
 ## 🔒 Privacy Features
 
@@ -199,7 +217,7 @@ src/
 - [x] **User Authentication**: Nostr key-based authentication system with AsyncStorage persistence
 - [x] **Onboarding Flow**: Comprehensive 3-step onboarding process with key generation/import
 - [x] **Real-time Messaging**: NIP-04 encrypted direct messages with live subscriptions
-- [x] **Post Management**: NIP-99 classified listings with create, view, and filter functionality
+- [x] **Post Management**: NIP-99 classified listings with create, view, delete, and filter functionality
 - [x] **Theme System**: Light, dark, and auto theme modes with system preference detection
 - [x] **Internationalization**: Complete English and French language support with i18next
 - [x] **Location Services**: GPS integration with privacy controls and geohash implementation
@@ -221,8 +239,8 @@ We welcome contributions from the community! Here's how you can help make **Pars
 1. **Fork the repository** on GitHub
 2. **Clone your fork** locally:
    ```bash
-   git clone https://github.com/kn9w/pars-en-cours.git
-   cd pars-en-cours
+   git clone https://github.com/kn9w/pars_en_cours.git
+   cd pars_en_cours
    ```
 3. **Set up environment variables**:
    ```bash
@@ -240,14 +258,14 @@ We welcome contributions from the community! Here's how you can help make **Pars
 
 ### 🐛 Reporting Issues
 
-- Use the [Issues](https://github.com/kn9w/pars-en-cours/issues) tab to report bugs
+- Use the [Issues](https://github.com/kn9w/pars_en_cours/issues) tab to report bugs
 - Search existing issues before creating new ones
 - Include steps to reproduce, expected behavior, and screenshots if applicable
 - Use issue templates when available
 
 ### 💡 Suggesting Features
 
-- Open a [Feature Request](https://github.com/kn9w/pars-en-cours/issues/new) issue
+- Open a [Feature Request](https://github.com/kn9w/pars_en_cours/issues/new) issue
 - Describe the feature and its use case
 - Explain how it aligns with the project's goals
 

@@ -9,7 +9,12 @@
     "splash": {
       "image": "./assets/android/play_store_512.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#ffffff",
+      "dark": {
+        "image": "./assets/android/play_store_512.png",
+        "resizeMode": "contain",
+        "backgroundColor": "#000000"
+      }
     },
     "assetBundlePatterns": [
       "**/*"
@@ -29,7 +34,12 @@
       "splash": {
         "image": "./assets/android/play_store_512.png",
         "resizeMode": "contain",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#ffffff",
+        "dark": {
+          "image": "./assets/android/play_store_512.png",
+          "resizeMode": "contain",
+          "backgroundColor": "#000000"
+        }
       },
       "permissions": [
         "ACCESS_FINE_LOCATION",
@@ -48,14 +58,14 @@
       [
         "@rnmapbox/maps",
         {
-          "RNMapboxMapsDownloadToken": "$MAPBOX_DOWNLOAD_TOKEN",
-          "RNMapboxMapsPublicToken": "$EXPO_PUBLIC_MAPBOX_PUBLIC_TOKEN"
+          "RNMapboxMapsDownloadToken": "",
+          "RNMapboxMapsPublicToken": ""
         }
       ]
     ],
     "extra": {
       "eas": {
-        "projectId": "$EXPO_PUBLIC_EAS_PROJECT_ID"
+        "projectId": ""
       }
     }
   }

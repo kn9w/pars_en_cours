@@ -192,6 +192,11 @@
     "contact": "Contacter",
     "copyNpub": "Copier npub",
     "npubCopied": "npub copié !",
+    "qrCode": {
+      "title": "Votre Clé Publique",
+      "publicKeyLabel": "Votre Clé Publique :",
+      "copyError": "Échec de la copie du npub dans le presse-papiers"
+    },
     "contactMessages": {
       "transport": {
         "ask": "Salut ! Je suis intéressé par votre demande de transport léger : {{title}}. Est-ce toujours disponible ?",
@@ -417,7 +422,14 @@
     "sendMessageError": "Échec de l'envoi du message. Veuillez réessayer.",
     "notAuthenticated": "Vous devez être connecté pour envoyer des messages.",
     "cannotMessageYourself": "Vous ne pouvez pas vous envoyer un message à vous-même.",
-    "recipientNoDMRelays": "Cet utilisateur n'a pas encore configuré la messagerie directe. Il doit d'abord configurer ses relais de messagerie."
+    "recipientNoDMRelays": "Cet utilisateur n'a pas encore configuré la messagerie directe. Il doit d'abord configurer ses relais de messagerie.",
+    "deletePost": "Supprimer l'Annonce",
+    "deletePostConfirm": "Cela publiera une demande de suppression sur tous les relais. L'annonce peut encore être visible sur certains relais qui ne supportent pas la suppression.",
+    "deleting": "Suppression...",
+    "deleteSuccess": "Annonce Supprimée",
+    "deleteSuccessMessage": "La demande de suppression a été publiée avec succès.",
+    "deleteError": "Échec de la suppression de l'annonce. Veuillez réessayer.",
+    "deleteErrorNoRelays": "Aucun relais d'écriture disponible. Veuillez d'abord configurer les relais dans les paramètres."
   },
   "settings": {
     "title": "Paramètres",

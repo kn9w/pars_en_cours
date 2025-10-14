@@ -14,6 +14,7 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import QRCode from 'react-native-qrcode-svg';
 import { useTheme } from '../../context/ThemeContext';
 import { useCustomAlert } from '../../hooks/useCustomAlert';
+import { useTranslations } from '../../i18n/hooks';
 import type { Theme } from '../../context/ThemeContext';
 import Button from './Button';
 import CustomAlert from './CustomAlert';
@@ -31,6 +32,7 @@ const QRCodeModal: React.FC<QRCodeModalProps> = ({
 }) => {
   const { theme } = useTheme();
   const { showAlert, hideAlert, alertVisible, alertOptions } = useCustomAlert();
+  const t = useTranslations();
   const styles = createStyles(theme);
   const fadeAnim = React.useRef(new Animated.Value(0)).current;
   const scaleAnim = React.useRef(new Animated.Value(0.8)).current;
@@ -43,8 +45,8 @@ const QRCodeModal: React.FC<QRCodeModalProps> = ({
       setTimeout(() => setCopied(false), 2000); // Reset after 2 seconds
     } catch (error) {
       showAlert({
-        title: 'Error',
-        message: 'Failed to copy npub to clipboard',
+        title: t('common.error'),
+        message: t('profile.qrCode.copyError'),
         type: 'error'
       });
     }
@@ -132,12 +134,12 @@ const QRCodeModal: React.FC<QRCodeModalProps> = ({
                 </View>
                 
                 <View style={styles.npubContainer}>
-                  <Text style={styles.npubLabel}>Your Public Key:</Text>
+                  <Text style={styles.npubLabel}>{t('profile.qrCode.publicKeyLabel')}</Text>
                   <Text style={styles.npubText} numberOfLines={2} ellipsizeMode="middle">
                     {npub}
                   </Text>
                   <Button
-                    title={copied ? "Copied!" : "Copy"}
+                    title={copied ? t('common.copied') : t('common.copy')}
                     onPress={handleCopyNpub}
                     variant="outline"
                     size="small"

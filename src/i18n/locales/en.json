@@ -192,6 +192,11 @@
     "contact": "Contact",
     "copyNpub": "Copy npub",
     "npubCopied": "npub copied!",
+    "qrCode": {
+      "title": "Your Public Key",
+      "publicKeyLabel": "Your Public Key:",
+      "copyError": "Failed to copy npub to clipboard"
+    },
     "contactMessages": {
       "transport": {
         "ask": "Hey! I'm interested in your request for light transport: {{title}}. Is it still available?",
@@ -490,6 +495,13 @@
     "sendMessageError": "Failed to send message. Please try again.",
     "notAuthenticated": "You must be logged in to send messages.",
     "cannotMessageYourself": "You cannot send a message to yourself.",
-    "recipientNoDMRelays": "This user has not set up direct messaging yet. They need to configure their DM inbox relays first."
+    "recipientNoDMRelays": "This user has not set up direct messaging yet. They need to configure their DM inbox relays first.",
+    "deletePost": "Delete Post",
+    "deletePostConfirm": "This will publish a deletion request to all relays. The post may still be visible on some relays that don't support deletion.",
+    "deleting": "Deleting...",
+    "deleteSuccess": "Post Deleted",
+    "deleteSuccessMessage": "Deletion request has been published successfully.",
+    "deleteError": "Failed to delete post. Please try again.",
+    "deleteErrorNoRelays": "No write relays available. Please configure relays in settings first."
   }
 }

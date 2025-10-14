@@ -43,14 +43,6 @@ const MAPBOX_CONFIG = {
   defaultZoom: 5,
 };
 
-interface MarkerData {
-  id: string;
-  coordinate: [number, number]; // [longitude, latitude] format for Mapbox
-  type: 'ask' | 'give';
-  title: string;
-  description: string;
-}
-
 interface ClusterMarkerData {
   geohash: string;
   coordinate: [number, number]; // [longitude, latitude] format for Mapbox
@@ -280,7 +272,7 @@ const MapScreen: React.FC<MapScreenProps> = ({ navigation }) => {
       setUserLocation(userCoordinate);
       
       // Update camera to user's location
-      if (cameraRef.current && cameraRef.current.flyTo) {
+      /*if (cameraRef.current && cameraRef.current.flyTo) {
         
         cameraRef.current.flyTo(userLocation, 1000);
         setTimeout(() => {
@@ -288,7 +280,7 @@ const MapScreen: React.FC<MapScreenProps> = ({ navigation }) => {
             cameraRef.current.zoomTo(8, 1000);
           }
         }, 1000); // Wait for flyTo duration
-      }
+      }*/
     } catch (error) {
       console.error('Error getting location:', error);
     }
@@ -374,13 +366,22 @@ const MapScreen: React.FC<MapScreenProps> = ({ navigation }) => {
       return;
     }
     const coordinate: [number, number] = event.geometry.coordinates;
+    
+    // Build buttons array based on user type
+    const buttons = [];
+    
+    // Only show "ask" button if user is a student
+    if (state.user?.userType === 'student') {
+      buttons.push({ text: t('map.askForHelp'), onPress: () => handleCreatePost('ask', coordinate) });
+    }
+    
+    // Always show "give" button
+    buttons.push({ text: t('map.offerHelp'), onPress: () => handleCreatePost('give', coordinate) });
+    
     alert(
       t('map.createNewPost'),
       t('map.postAtLocation'),
-      [
-        { text: t('map.askForHelp'), onPress: () => handleCreatePost('ask', coordinate) },
-        { text: t('map.offerHelp'), onPress: () => handleCreatePost('give', coordinate) },
-      ]
+      buttons
     );
   };
 

@@ -20,6 +20,7 @@ import CustomAlert from '../components/common/CustomAlert';
 import type { Theme } from '../context/ThemeContext';
 import type { PostData } from '../types';
 import { formatNpub, createNeventForPost, createConversationId, formatTimeAgo } from '../utils';
+import { deletePost } from '../utils/deletion';
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 
@@ -45,6 +46,7 @@ const PostDetailScreen: React.FC<PostDetailScreenProps> = ({ route, navigation }
   const { post } = route.params;
   
   const [showActionMenu, setShowActionMenu] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
   const scrollY = useRef(new Animated.Value(0)).current;
   
   // Load author profile when component mounts
@@ -96,6 +98,9 @@ const PostDetailScreen: React.FC<PostDetailScreenProps> = ({ route, navigation }
         break;
       case 'share':
         handleSharePost();
+        break;
+      case 'delete':
+        handleDeletePost();
         break;
       default:
         break;
@@ -158,6 +163,76 @@ const PostDetailScreen: React.FC<PostDetailScreenProps> = ({ route, navigation }
       console.error('Error sharing post:', error);
       // Show error alert if sharing fails
       alert(t('postDetail.error'), t('postDetail.shareError'), [{ text: t('common.ok') }]);
+    }
+  };
+
+  const handleDeletePost = async () => {
+    // Verify user is authenticated and owns the post
+    if (!user?.privateKey) {
+      alert(
+        t('postDetail.error'), 
+        t('postDetail.notAuthenticated'), 
+        [{ text: t('common.ok') }]
+      );
+      return;
+    }
+
+    if (user.pubkey !== post.pubkey) {
+      alert(
+        t('postDetail.error'), 
+        'You can only delete your own posts', 
+        [{ text: t('common.ok') }]
+      );
+      return;
+    }
+
+    // Show confirmation dialog
+    alert(
+      t('postDetail.deletePost'),
+      `${t('postDetail.deletePostConfirm')}`,
+      [
+        { text: t('common.cancel'), style: 'cancel' },
+        { 
+          text: t('common.delete'), 
+          style: 'destructive', 
+          onPress: confirmDeletePost 
+        }
+      ]
+    );
+  };
+
+  const confirmDeletePost = async () => {
+    if (!user?.privateKey) return;
+
+    setIsDeleting(true);
+    
+    try {
+      await deletePost(
+        post.id,
+        30402, // NIP-99 classified listing kind
+        '',
+        user.privateKey
+      );
+
+      alert(
+        t('postDetail.deleteSuccess'),
+        t('postDetail.deleteSuccessMessage'),
+        [
+          { 
+            text: t('common.ok'), 
+            onPress: () => navigation.goBack() 
+          }
+        ]
+      );
+    } catch (error) {
+      console.error('Error deleting post:', error);
+      alert(
+        t('postDetail.error'),
+        t('postDetail.deleteError'),
+        [{ text: t('common.ok') }]
+      );
+    } finally {
+      setIsDeleting(false);
     }
   };
 
@@ -448,15 +523,29 @@ const PostDetailScreen: React.FC<PostDetailScreenProps> = ({ route, navigation }
             </Text>
           </TouchableOpacity>
 
-          <TouchableOpacity 
-            style={[styles.primaryButton, { backgroundColor: post.type === 'ask' ? '#007AFF' : '#34C759' }]}
-            onPress={() => handleActionPress('contact')}
-          >
-            <FontAwesome5 name="envelope" size={16} color={theme.colors.background} />
-            <Text style={[styles.primaryButtonText, { color: theme.colors.background }]}>
-              {post.type === 'ask' ? t('postDetail.offerHelp') : t('postDetail.getInTouch')}
-            </Text>
-          </TouchableOpacity>
+          {/* Show delete button if user owns the post */}
+          {user?.pubkey === post.pubkey ? (
+            <TouchableOpacity 
+              style={[styles.deleteButton, { opacity: isDeleting ? 0.6 : 1 }]}
+              onPress={() => handleActionPress('delete')}
+              disabled={isDeleting}
+            >
+              <FontAwesome5 name="trash" size={16} color={theme.colors.danger} />
+              <Text style={[styles.deleteButtonText, { color: theme.colors.danger }]}>
+                {isDeleting ? t('postDetail.deleting') : t('postDetail.deletePost')}
+              </Text>
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity 
+              style={[styles.primaryButton, { backgroundColor: post.type === 'ask' ? '#007AFF' : '#34C759' }]}
+              onPress={() => handleActionPress('contact')}
+            >
+              <FontAwesome5 name="envelope" size={16} color={theme.colors.background} />
+              <Text style={[styles.primaryButtonText, { color: theme.colors.background }]}>
+                {post.type === 'ask' ? t('postDetail.offerHelp') : t('postDetail.getInTouch')}
+              </Text>
+            </TouchableOpacity>
+          )}
         </View>
       </ScrollView>
       
@@ -719,6 +808,23 @@ const createStyles = (theme: Theme) => StyleSheet.create({
     borderWidth: 2,
   },
   secondaryButtonText: {
+    fontSize: 16,
+    fontWeight: '600',
+    marginLeft: 8,
+  },
+  deleteButton: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 16,
+    paddingHorizontal: 24,
+    borderRadius: 12,
+    borderWidth: 2,
+    borderColor: theme.colors.danger,
+    backgroundColor: 'transparent',
+  },
+  deleteButtonText: {
     fontSize: 16,
     fontWeight: '600',
     marginLeft: 8,

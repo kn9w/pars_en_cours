@@ -244,7 +244,6 @@ const CreatePostScreen: React.FC<CreatePostScreenProps> = ({ navigation, route }
       const tags: string[][] = [
         ['d', `${Date.now()}-${Math.random().toString(36).substring(7)}`], // Unique identifier
         ['title', title.trim()],
-        ['summary', summary.trim() || title.trim().substring(0, 100)],
         ['published_at', Math.floor(Date.now() / 1000).toString()],
         ['g', geohash],
         ['t', postType], // Type tag (ask or give)
@@ -252,9 +251,14 @@ const CreatePostScreen: React.FC<CreatePostScreenProps> = ({ navigation, route }
         ['t', postCategory!], // Post category tag
       ];
 
-      // Add location tag only if city is provided and not 'Unknown'
-      if (city.trim() && city.trim() !== 'Unknown') {
-        tags.push(['location', city.trim()]);
+      const trimmedSummary = summary.trim();
+      if (trimmedSummary) {
+        tags.push(['summary', trimmedSummary]);
+      }
+
+      const trimmedCity = city.trim();
+      if (trimmedCity && trimmedCity !== 'Unknown') {
+        tags.push(['location', trimmedCity]);
       }
 
       // Add image URLs if provided

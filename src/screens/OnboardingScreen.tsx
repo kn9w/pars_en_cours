@@ -252,7 +252,10 @@ const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onComplete }) => {
 
   const renderStep2 = () => (
     <Animated.View style={[styles.stepContainer, { opacity: fadeAnim }]}>
-      <ScrollView style={styles.step2ScrollView} showsVerticalScrollIndicator={false}>
+      <ScrollView 
+        style={styles.step2ScrollView} 
+        showsVerticalScrollIndicator={false}
+      >
         <View style={styles.step2Content}>
           {/* Header */}
           <View style={styles.step2Header}>
@@ -346,7 +349,10 @@ const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onComplete }) => {
 
   const renderStep3 = () => (
     <Animated.View style={[styles.stepContainer, { opacity: fadeAnim }]}>
-      <ScrollView style={styles.step3Container} showsVerticalScrollIndicator={false}>
+      <ScrollView 
+        style={styles.step3Container} 
+        showsVerticalScrollIndicator={false}
+      >
         {/* Header */}
         <View style={styles.step3Header}>
           <Text style={styles.step3Title}>{t('onboarding.step3.title')}</Text>
