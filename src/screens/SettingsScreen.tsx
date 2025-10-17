@@ -1,5 +1,5 @@
 import React, { useState, useCallback, memo } from 'react';
-import { View, Text, StyleSheet, SafeAreaView, ScrollView, Platform, StatusBar, TouchableOpacity, Switch, TextInput, Modal } from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView, ScrollView, Platform, StatusBar, TouchableOpacity, Switch, Modal, Linking, Clipboard, ToastAndroid, Alert } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { useTheme } from '../context/ThemeContext';
 import { useLocalization } from '../i18n/hooks';
@@ -11,6 +11,9 @@ import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../types';
 import type { Theme } from '../context/ThemeContext';
+import * as Application from 'expo-application';
+import * as LocalAuthentication from 'expo-local-authentication';
+import { formatNsec } from '../utils/nostr';
 
 type SettingsScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Settings'>;
 
@@ -78,7 +81,7 @@ const SettingsScreen = () => {
   const { theme, themeMode, setThemeMode } = useTheme();
   const { language, setLanguage, t } = useLocalization();
   const { allRelays, relays, addRelay, removeRelay, updateRelay, toggleRelay, testRelay, isLoading } = useRelays();
-  const { logout, isLoading: isLoggingOut } = useAuth();
+  const { user, logout, isLoading: isLoggingOut } = useAuth();
   const navigation = useNavigation<SettingsScreenNavigationProp>();
   const { showAlert, hideAlert, alertVisible, alertOptions } = useCustomAlert();
   const alert = createAlertFunction(showAlert);
@@ -89,7 +92,7 @@ const SettingsScreen = () => {
   const [newRelayName, setNewRelayName] = useState('');
   const [isAddingRelay, setIsAddingRelay] = useState(false);
   const [testingRelays, setTestingRelays] = useState<Set<string>>(new Set());
-  
+    
   const styles = createStyles(theme);
 
   // Theme options
@@ -278,6 +281,82 @@ const SettingsScreen = () => {
     );
   }, [logout, alert, t]);
 
+  // Open URL handler
+  const openURL = useCallback(async (url: string) => {
+    try {
+      const canOpen = await Linking.canOpenURL(url);
+      if (canOpen) {
+        await Linking.openURL(url);
+      } else {
+        alert(t('common.error'), 'Cannot open URL', undefined, 'error');
+      }
+    } catch (error) {
+      console.error('Error opening URL:', error);
+      alert(t('common.error'), 'Failed to open URL', undefined, 'error');
+    }
+  }, [alert, t]);
+
+  // Account backup handlers
+  const getNsecFromUser = useCallback(() => {
+    if (!user?.privateKey) return '';
+    return formatNsec(user.privateKey);
+  }, [user]);
+
+  const authenticateWithBiometrics = useCallback(async (): Promise<boolean> => {
+    try {
+      // Check if any authentication method is enrolled (biometric OR passcode)
+      // This ensures the device has some form of security
+      const isEnrolled = await LocalAuthentication.isEnrolledAsync();
+      if (!isEnrolled) {
+        alert(
+          t('settings.backup.deviceNotSecured.title'),
+          t('settings.backup.deviceNotSecured.message'),
+          undefined,
+          'error'
+        );
+        return false;
+      }
+
+      // Authenticate with biometric or device passcode/PIN
+      // disableDeviceFallback: false allows automatic fallback to PIN if biometrics unavailable
+      const result = await LocalAuthentication.authenticateAsync({
+        promptMessage: t('settings.backup.authPrompt'),
+        cancelLabel: t('common.cancel'),
+        disableDeviceFallback: false, // Allow PIN/passcode fallback
+        fallbackLabel: t('settings.backup.authFallback'),
+      });
+
+      return result.success;
+    } catch (error) {
+      console.error('Error authenticating:', error);
+      alert(t('common.error'), t('settings.backup.authError'), undefined, 'error');
+      return false;
+    }
+  }, [alert, t]);
+
+  const handleCopyNsecWithAuth = useCallback(async () => {
+    // Authenticate with device security
+    const authenticated = await authenticateWithBiometrics();
+    if (authenticated) {
+      try {
+        const nsec = getNsecFromUser();
+        if (nsec) {
+          await Clipboard.setString(nsec);
+          // Show native toast/popup
+          if (Platform.OS === 'android') {
+            ToastAndroid.show(t('settings.backup.copiedToClipboard'), ToastAndroid.LONG);
+          } else {
+            // For iOS, use a brief alert
+            Alert.alert(t('settings.backup.copiedToClipboard'));
+          }
+        }
+      } catch (error) {
+        console.error('Error copying nsec:', error);
+        alert(t('common.error'), t('settings.backup.copyError'), undefined, 'error');
+      }
+    }
+  }, [authenticateWithBiometrics, getNsecFromUser, alert, t]);
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
@@ -288,6 +367,14 @@ const SettingsScreen = () => {
           <FontAwesome5 name="arrow-left" size={20} color={theme.colors.text} />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>{t('settings.title')}</Text>
+        <TouchableOpacity 
+          style={styles.logoutButton} 
+          onPress={handleLogout}
+          disabled={isLoggingOut}
+        >
+          <FontAwesome5 name="sign-out-alt" size={18} color={theme.colors.danger} />
+          <Text style={styles.logoutButtonText}>{t('settings.logout')}</Text>
+        </TouchableOpacity>
       </View>
 
       <ScrollView style={styles.content}>
@@ -408,22 +495,49 @@ const SettingsScreen = () => {
           />
         </View>
 
+        {/* Account Backup Section */}
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>{t('settings.backup.title')}</Text>
+          <Text style={styles.sectionDescription}>{t('settings.backup.description')}</Text>
+          
+          <View style={styles.backupContainer}>
+            <View style={styles.warningBox}>
+              <FontAwesome5 name="exclamation-triangle" size={16} color={theme.colors.warning} />
+              <Text style={styles.warningText}>{t('settings.backup.warning')}</Text>
+            </View>
 
-        {/* Logout Section */}
-        <View style={styles.logoutSection}>
-          <SettingsItem
-            title={t('settings.logout')}
-            icon="sign-out-alt"
-            onPress={handleLogout}
-            theme={theme}
-            rightComponent={
-              isLoggingOut ? (
-                <FontAwesome5 name="spinner" size={16} color={theme.colors.danger} />
-              ) : undefined
-            }
-            showArrow={false}
-            isDestructive={true}
-          />
+            <TouchableOpacity
+              style={styles.copyButton}
+              onPress={handleCopyNsecWithAuth}
+            >
+              <FontAwesome5 
+                name="copy" 
+                size={16} 
+                color={theme.colors.primaryText}
+              />
+              <Text style={styles.copyButtonText}>
+                {t('settings.backup.copyButton')}
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+
+        {/* About Section */}
+        <View style={styles.section}>          
+          {/* App Version and Links */}
+          <View style={styles.aboutContainer}>
+            <Text style={styles.versionText}>
+              {t('settings.about.version')} {Application.nativeApplicationVersion}
+            </Text>
+            <TouchableOpacity 
+              onPress={() => openURL('https://projects.kn9w.com/pars_en_cours')}
+              activeOpacity={0.7}
+            >
+              <Text style={styles.sourceCodeLink}>
+                {t('settings.about.sourceCode')}
+              </Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </ScrollView>
       
@@ -526,6 +640,18 @@ const createStyles = (theme: Theme) => StyleSheet.create({
     fontWeight: '600',
     color: theme.colors.text,
     flex: 1,
+  },
+  logoutButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 8,
+    marginLeft: 8,
+    gap: 6,
+  },
+  logoutButtonText: {
+    fontSize: 16,
+    fontWeight: '500',
+    color: theme.colors.danger,
   },
   content: {
     flex: 1,
@@ -743,14 +869,6 @@ const createStyles = (theme: Theme) => StyleSheet.create({
     fontWeight: '500',
     color: theme.colors.primaryText,
   },
-  // Logout section styles
-  logoutSection: {
-    marginTop: 20,
-    marginBottom: 32,
-    borderTopWidth: 1,
-    borderTopColor: theme.colors.border,
-    paddingTop: 20,
-  },
   // Destructive action styles
   destructiveItem: {
     borderColor: '#F4433620',
@@ -763,6 +881,59 @@ const createStyles = (theme: Theme) => StyleSheet.create({
   },
   destructiveDescription: {
     color: theme.colors.danger,
+  },
+  // Account backup section styles
+  backupContainer: {
+    gap: 16,
+  },
+  warningBox: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: theme.colors.warning + '15',
+    borderWidth: 1,
+    borderColor: theme.colors.warning + '30',
+    borderRadius: 8,
+    padding: 12,
+    gap: 10,
+  },
+  warningText: {
+    flex: 1,
+    fontSize: 13,
+    color: theme.colors.text,
+    lineHeight: 18,
+  },
+  copyButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: theme.colors.primary,
+    borderRadius: 8,
+    padding: 14,
+    gap: 8,
+  },
+  copyButtonText: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: theme.colors.primaryText,
+  },
+  // About section styles
+  aboutContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 24,
+    gap: 8,
+  },
+  versionText: {
+    fontSize: 14,
+    color: theme.colors.text,
+    opacity: 0.6,
+  },
+  sourceCodeLink: {
+    fontSize: 14,
+    color: theme.colors.primary,
+    fontWeight: '500',
+    textDecorationLine: 'underline',
   },
 });
 

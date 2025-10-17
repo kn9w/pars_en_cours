@@ -436,6 +436,29 @@
       "message": "Are you sure you want to log out? You will need to log in again to access your account.",
       "logout": "Log Out",
       "cancel": "Cancel"
+    },
+    "backup": {
+      "title": "Account Backup",
+      "description": "Back up your account by saving your secret key (nsec) in a secure location.",
+      "warning": "Never share your secret key with anyone. Anyone with access to it can control your account.",
+      "copyButton": "Copy Your Secret Key",
+      "copiedToClipboard": "Secret key copied to clipboard",
+      "copyError": "Failed to copy secret key",
+      "authPrompt": "Authenticate to copy your secret key",
+      "authFallback": "Use passcode",
+      "authError": "Authentication failed",
+      "deviceNotSecured": {
+        "title": "Device Not Secured",
+        "message": "Please set up a screen lock (PIN, password, pattern, fingerprint, or Face ID) in your device settings to access your secret key."
+      }
+    },
+    "about": {
+      "title": "About",
+      "version": "Version",
+      "sourceCode": "Source Code",
+      "sourceCodeDescription": "View Source Code",
+      "reportIssue": "Report Issue",
+      "reportIssueDescription": "Found a bug? Let us know"
     }
   },
   "bookmarks": {

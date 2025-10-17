@@ -130,16 +130,20 @@ jobs:
         VERSION="${{ steps.version.outputs.version }}"
         
         if [ ! -f "CHANGELOG.md" ]; then
+          echo "❌ Error: CHANGELOG.md not found"
           exit 1
         fi
         
-        awk "/^## \[${VERSION}\]/,/^## \[/" CHANGELOG.md | sed '$d' > /tmp/changelog_section.md
+        # Extract content between current version and next version (or EOF)
+        # This handles both single-version and multi-version CHANGELOGs
+        awk "/^## \[${VERSION}\]/{flag=1; next} /^## \[/{if(flag) exit} flag" CHANGELOG.md > /tmp/release_notes.md
         
-        if [ ! -s /tmp/changelog_section.md ]; then
+        if [ ! -s /tmp/release_notes.md ]; then
+          echo "❌ Error: No release notes found for version ${VERSION} in CHANGELOG.md"
           exit 1
         fi
         
-        tail -n +2 /tmp/changelog_section.md > /tmp/release_notes.md
+        echo "✅ Extracted release notes for version ${VERSION}"
                 
     - name: Create Release
       env:

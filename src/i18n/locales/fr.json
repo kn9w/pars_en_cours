@@ -502,6 +502,29 @@
       "message": "Êtes-vous sûr de vouloir vous déconnecter ? Vous devrez vous reconnecter pour accéder à votre compte.",
       "logout": "Se Déconnecter",
       "cancel": "Annuler"
+    },
+    "backup": {
+      "title": "Sauvegarde du Compte",
+      "description": "Sauvegardez votre compte en enregistrant votre clé secrète (nsec) dans un endroit sécurisé.",
+      "warning": "Ne partagez jamais votre clé secrète avec quiconque. Toute personne y ayant accès peut contrôler votre compte.",
+      "copyButton": "Copier votre Clé Secrète",
+      "copiedToClipboard": "Clé secrète copiée dans le presse-papiers",
+      "copyError": "Échec de la copie de la clé secrète",
+      "authPrompt": "Authentifiez-vous pour copier votre clé secrète",
+      "authFallback": "Utiliser le code",
+      "authError": "Échec de l'authentification",
+      "deviceNotSecured": {
+        "title": "Appareil Non Sécurisé",
+        "message": "Veuillez configurer un verrouillage d'écran (code PIN, mot de passe, schéma, empreinte digitale ou Face ID) dans les paramètres de votre appareil pour accéder à votre clé secrète."
+      }
+    },
+    "about": {
+      "title": "À Propos",
+      "version": "Version",
+      "sourceCode": "Code Source",
+      "sourceCodeDescription": "Voir le code source",
+      "reportIssue": "Signaler un Problème",
+      "reportIssueDescription": "Vous avez trouvé un bug ? Faites-le nous savoir"
     }
   }
 }

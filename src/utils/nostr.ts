@@ -111,6 +111,25 @@ export const formatNpub = (pubkey: string, maxLength: number = 8): string => {
 };
 
 /**
+ * Convert hex private key to nsec format
+ * @param hexPrivateKey - Hex format private key (64 characters)
+ * @returns nsec formatted private key
+ */
+export const formatNsec = (hexPrivateKey: string): string => {
+  if (!hexPrivateKey) return '';
+  
+  try {
+    // Convert hex string to Uint8Array (same as importNostrKeys)
+    const privateKeyBytes = new Uint8Array(Buffer.from(hexPrivateKey, 'hex'));
+    const nsec = nip19.nsecEncode(privateKeyBytes);
+    return nsec;
+  } catch (error) {
+    console.error('Error converting hex private key to nsec:', error);
+    return '';
+  }
+};
+
+/**
  * Create a nevent string for sharing a post
  * @param post - The post data to create nevent for
  * @param relays - Array of relay URLs to include
