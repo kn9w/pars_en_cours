@@ -127,6 +127,18 @@ Steps 1-8 are identical to the Build Workflow.
 ### EAS Profile Used
 Same as Build Workflow (`production` profile)
 
+### App Signing
+Production builds use **custom local keystores**:
+- Configuration: `credentialsSource: "local"` in `eas.json`
+- Keystore stored in `android/keystore/release.keystore`
+- Keystore credentials stored in GitHub Secrets
+- See [CUSTOM_KEYSTORE_SETUP.md](./CUSTOM_KEYSTORE_SETUP.md) for setup instructions
+
+**⚠️ IMPORTANT:** Backup your keystore securely:
+- Store encrypted backups in multiple secure locations
+- Keep keystore passwords in a password manager
+- Never commit keystore files or passwords to version control
+
 ---
 
 ## 🔧 Version Management
@@ -234,7 +246,13 @@ The following secrets must be configured in GitHub repository settings:
 | `MAPBOX_PUBLIC_TOKEN` | Mapbox map display | Both workflows |
 | `MAPBOX_DOWNLOAD_TOKEN` | Mapbox SDK download | Both workflows |
 | `EAS_PROJECT_ID` | EAS project identifier | Both workflows |
+| `ANDROID_KEYSTORE_BASE64` | Base64-encoded Android keystore file | Release workflow |
+| `ANDROID_KEYSTORE_PASSWORD` | Keystore password | Release workflow |
+| `ANDROID_KEY_ALIAS` | Key alias (default: `release`) | Release workflow |
+| `ANDROID_KEY_PASSWORD` | Key password | Release workflow |
 | `GITHUB_TOKEN` | Create releases (auto-provided) | Release workflow |
+
+**Note**: See [CUSTOM_KEYSTORE_SETUP.md](./CUSTOM_KEYSTORE_SETUP.md) for detailed instructions on generating and configuring the Android keystore secrets.
 
 ---
 

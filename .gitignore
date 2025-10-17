@@ -1,6 +1,9 @@
 #Environment variables
 .env
 
+# EAS credentials
+credentials.json
+
 # Expo
 .expo/
 dist/

@@ -9,6 +9,8 @@ on:
 jobs:
   build-and-release:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     
     steps:
     - name: Setup repo
@@ -46,6 +48,51 @@ jobs:
         echo "EXPO_PUBLIC_EAS_PROJECT_ID=${{ secrets.EAS_PROJECT_ID }}" >> .env
         echo "EXPO_PUBLIC_ENABLE_MAPBOX=true" >> .env
         
+    - name: Setup Android Keystore
+      run: |
+        # Create keystore directory
+        mkdir -p android/keystore
+        
+        # Create keystore.properties file with secrets
+        cat > android/keystore/keystore.properties << EOF
+        storeFile=../keystore/release.keystore
+        storePassword=${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+        keyAlias=${{ secrets.ANDROID_KEY_ALIAS }}
+        keyPassword=${{ secrets.ANDROID_KEY_PASSWORD }}
+        EOF
+        
+        # Create keystore from base64 encoded secret
+        echo "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" | base64 -d > android/keystore/release.keystore
+        
+        # Create credentials.json for EAS local credentials
+        cat > credentials.json << EOF
+        {
+          "android": {
+            "keystore": {
+              "keystorePath": "android/keystore/release.keystore",
+              "keystorePassword": "${{ secrets.ANDROID_KEYSTORE_PASSWORD }}",
+              "keyAlias": "${{ secrets.ANDROID_KEY_ALIAS }}",
+              "keyPassword": "${{ secrets.ANDROID_KEY_PASSWORD }}"
+            }
+          }
+        }
+        EOF
+        
+        # Verify keystore file exists and is valid
+        if [ ! -f android/keystore/release.keystore ]; then
+          echo "❌ Error: Keystore file was not created"
+          exit 1
+        fi
+        
+        # Verify keystore is valid (this will fail if keystore is corrupted)
+        keytool -list -keystore android/keystore/release.keystore -storepass "${{ secrets.ANDROID_KEYSTORE_PASSWORD }}" -alias "${{ secrets.ANDROID_KEY_ALIAS }}" > /dev/null 2>&1
+        if [ $? -eq 0 ]; then
+          echo "✅ Keystore validated successfully"
+        else
+          echo "❌ Error: Keystore validation failed - check your keystore file and passwords"
+          exit 1
+        fi
+        
     - name: Extract version from app.json
       id: version
       run: |
@@ -60,6 +107,16 @@ jobs:
         MAPBOX_DOWNLOAD_TOKEN: ${{ secrets.MAPBOX_DOWNLOAD_TOKEN }}
         EXPO_PUBLIC_EAS_PROJECT_ID: ${{ secrets.EAS_PROJECT_ID }}
         EXPO_PUBLIC_ENABLE_MAPBOX: true
+
+    - name: Verify APK was created
+      run: |
+        APK_PATH="${{ github.workspace }}/pars-en-cours-v${{ steps.version.outputs.version }}.apk"
+        if [ ! -f "$APK_PATH" ]; then
+          echo "❌ Error: APK file was not created at $APK_PATH"
+          exit 1
+        fi
+        APK_SIZE=$(du -h "$APK_PATH" | cut -f1)
+        echo "✅ APK created successfully: $APK_SIZE"
         
     - name: Generate checksums
       run: |
@@ -67,57 +124,32 @@ jobs:
         sha256sum pars-en-cours-v${{ steps.version.outputs.version }}.apk > pars-en-cours-v${{ steps.version.outputs.version }}.apk.sha256
         md5sum pars-en-cours-v${{ steps.version.outputs.version }}.apk > pars-en-cours-v${{ steps.version.outputs.version }}.apk.md5
         
-    - name: Create build info
+    - name: Extract release notes from CHANGELOG.md
+      id: release_notes
       run: |
-        cat > build-info.json << EOF
-        {
-          "version": "${{ steps.version.outputs.version }}",
-          "git_tag": "${{ github.ref_name }}",
-          "commit": "${{ github.sha }}",
-          "build_date": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
-          "build_environment": "GitHub Actions",
-          "node_version": "$(node --version)",
-          "npm_version": "$(npm --version)",
-          "expo_version": "$(npx expo --version)"
-        }
-        EOF
+        VERSION="${{ steps.version.outputs.version }}"
         
+        if [ ! -f "CHANGELOG.md" ]; then
+          exit 1
+        fi
+        
+        awk "/^## \[${VERSION}\]/,/^## \[/" CHANGELOG.md | sed '$d' > /tmp/changelog_section.md
+        
+        if [ ! -s /tmp/changelog_section.md ]; then
+          exit 1
+        fi
+        
+        tail -n +2 /tmp/changelog_section.md > /tmp/release_notes.md
+                
     - name: Create Release
-      uses: softprops/action-gh-release@v1
-      with:
-        files: |
-          pars-en-cours-v${{ steps.version.outputs.version }}.apk
-          pars-en-cours-v${{ steps.version.outputs.version }}.apk.sha256
-          pars-en-cours-v${{ steps.version.outputs.version }}.apk.md5
-          build-info.json
-        body: |
-          ## Release ${{ github.ref_name }} (v${{ steps.version.outputs.version }})
-          
-          ### 📱 APK Download
-          - **APK File**: `pars-en-cours-v${{ steps.version.outputs.version }}.apk`
-          - **SHA256**: See `pars-en-cours-v${{ steps.version.outputs.version }}.apk.sha256`
-          - **MD5**: See `pars-en-cours-v${{ steps.version.outputs.version }}.apk.md5`
-          
-          ### 🔐 Verification
-          
-          **Verify the APK integrity:**
-          ```bash
-          # Download the APK and checksum files
-          sha256sum -c pars-en-cours-v${{ steps.version.outputs.version }}.apk.sha256
-          ```
-          
-          **Verify the build matches the source code:**
-          1. Clone this repository at commit `${{ github.sha }}`
-          2. Follow the build instructions in README.md
-          3. Compare the generated APK with this release
-          
-          **Build Information:**
-          - **Commit**: `${{ github.sha }}`
-          - **Build Date**: `$(date -u +%Y-%m-%dT%H:%M:%SZ)`
-          - **Built with**: GitHub Actions (Ubuntu Latest)
-          
-          ### 📋 Changes
-          See the [CHANGELOG.md](CHANGELOG.md) for detailed changes in this release.
-          
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        tag: ${{ github.ref_name }}
+      run: |
+        gh release create "$tag" \
+          --repo="$GITHUB_REPOSITORY" \
+          --title="Release ${tag#v}" \
+          --notes-file /tmp/release_notes.md \
+          pars-en-cours-v${{ steps.version.outputs.version }}.apk \
+          pars-en-cours-v${{ steps.version.outputs.version }}.apk.sha256 \
+          pars-en-cours-v${{ steps.version.outputs.version }}.apk.md5
