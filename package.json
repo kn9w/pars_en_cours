@@ -1,6 +1,6 @@
 {
   "name": "pars-en-cours",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "main": "expo/AppEntry.js",
   "scripts": {
     "start": "expo start",
@@ -9,7 +9,11 @@
     "ios": "expo run:ios",
     "web": "expo start --web",
     "validate-translations": "node scripts/validate-translations.js",
-    "add-language": "node scripts/add-language.js"
+    "add-language": "node scripts/add-language.js",
+    "version": "node scripts/version.js",
+    "version:patch": "node scripts/version.js patch",
+    "version:minor": "node scripts/version.js minor",
+    "version:major": "node scripts/version.js major"
   },
   "dependencies": {
     "@expo/vector-icons": "^15.0.2",
