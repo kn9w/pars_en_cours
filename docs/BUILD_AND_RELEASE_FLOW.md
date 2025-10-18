@@ -8,6 +8,17 @@ The project uses two GitHub Actions workflows:
 - **Build Workflow** (`build.yml`) - Creates preview APKs for development/testing
 - **Release Workflow** (`build-and-release.yml`) - Creates official releases with GitHub Releases
 
+### Architecture-Specific Builds
+
+As of the latest version, the project builds **architecture-specific APKs** instead of a single universal APK. This means:
+
+- ✅ **Smaller downloads** (~40-60% smaller APK sizes for architecture-specific builds)
+- ✅ **Faster installation** (less to unpack)
+- ✅ **Better user experience** (users can choose architecture-specific or universal)
+- 📦 **5 APK files** per release (4 architecture-specific + 1 universal fallback)
+
+For detailed information, see [ARCHITECTURE_SPECIFIC_BUILDS.md](./ARCHITECTURE_SPECIFIC_BUILDS.md).
+
 ## 📦 Build Workflow (Preview Builds)
 
 ### Purpose
@@ -77,7 +88,7 @@ Automatically builds preview APKs for testing during development. These are not 
 ## 🚀 Release Workflow (Official Releases)
 
 ### Purpose
-Creates official production releases with public GitHub Releases and downloadable APK files.
+Creates official production releases with public GitHub Releases and downloadable architecture-specific APK files.
 
 ### Triggers
 - Push of git tags starting with `v` (e.g., `v0.0.1`, `v1.2.3`)
@@ -89,40 +100,47 @@ Steps 1-8 are identical to the Build Workflow.
 
 9. **APK Build**
    - Command: `eas build --platform android --profile production --local`
-   - Output filename: `pars-en-cours-v{version}.apk` (no "-preview" suffix)
+   - Builds architecture-specific APKs (see [ARCHITECTURE_SPECIFIC_BUILDS.md](./ARCHITECTURE_SPECIFIC_BUILDS.md))
+   - Output: Multiple APKs (one per architecture)
 
-10. **Checksum Generation**
-    - SHA256 checksum: `pars-en-cours-v{version}.apk.sha256`
-    - MD5 checksum: `pars-en-cours-v{version}.apk.md5`
+10. **Find and Organize APKs**
+    - Scans `android/app/build/outputs/apk/release/` for all generated APKs
+    - Copies and renames them to: `pars-en-cours-v{version}-{arch}.apk`
+    - Supported architectures:
+      - `arm64-v8a` (modern 64-bit ARM devices) - recommended
+      - `armeabi-v7a` (older 32-bit ARM devices)
+      - `x86_64` (64-bit Intel/AMD devices)
+      - `x86` (32-bit Intel/AMD devices)
+      - `universal` (all architectures) - compatibility fallback
+    - Validates that at least one APK was created
+
+11. **Checksum Generation**
+    - For each APK, generates:
+      - SHA256 checksum: `{apk-name}.sha256`
+      - MD5 checksum: `{apk-name}.md5`
     - Used for integrity verification
 
-11. **Build Information**
-    - Creates `build-info.json` with metadata:
-      - Version number
-      - Git tag
-      - Commit SHA
-      - Build date (UTC)
-      - Build environment
-      - Node.js, npm, and Expo versions
+12. **Release Notes Enhancement**
+    - Extracts version-specific notes from `CHANGELOG.md`
+    - Appends download instructions explaining:
+      - Which APK to download for each device type
+      - How to verify checksums
+      - Benefits of architecture-specific APKs
 
-12. **GitHub Release Creation**
+13. **GitHub Release Creation**
     - Creates public GitHub Release
-    - Attaches files:
-      - APK file
-      - SHA256 checksum
-      - MD5 checksum
-      - Build info JSON
-    - Auto-generates release notes with:
-      - Download instructions
-      - Verification instructions
-      - Build information
-      - Link to CHANGELOG.md
+    - Attaches all files:
+      - All architecture-specific APK files
+      - SHA256 checksums for each APK
+      - MD5 checksums for each APK
+    - Includes enhanced release notes with download instructions
 
 ### Output
 - Public GitHub Release page
-- Downloadable APK (no GitHub login required)
-- Checksum files for verification
+- Multiple downloadable APKs (5 files: 4 architecture-specific + 1 universal)
+- Checksum files for each APK (10 checksum files total)
 - Permanent storage (no automatic cleanup)
+- **~40-60% smaller** architecture-specific APK sizes compared to universal APK
 
 ### EAS Profile Used
 Same as Build Workflow (`production` profile)

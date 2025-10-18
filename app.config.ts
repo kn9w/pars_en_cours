@@ -17,6 +17,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
         RNMapboxMapsPublicToken: process.env.EXPO_PUBLIC_MAPBOX_PUBLIC_TOKEN,
       },
     ],
+    './plugins/withAndroidABISplits.js',
   ],
   extra: {
     eas: {

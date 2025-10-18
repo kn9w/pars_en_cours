@@ -20,6 +20,13 @@
         "buildType": "apk",
         "credentialsSource": "local"
       }
+    },
+    "production-aab": {
+      "autoIncrement": false,
+      "android": {
+        "buildType": "app-bundle",
+        "credentialsSource": "local"
+      }
     }
   },
   "submit": {
